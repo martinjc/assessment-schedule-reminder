@@ -7,6 +7,7 @@ from collections import defaultdict
 from datetime import datetime, timedelta
 
 from config import *
+from mailer import Mailer
 from datalib.module_list import *
 
 
@@ -90,6 +91,51 @@ def main(dev_mode=False):
     assessment_data = read_assessment_sheet()
     print(assessment_data)
 
+    modules_out = []
+    modules_in = []
+    modules_feedback = []
+
+    for i, row in assessment_data.iterrows():
+        #print(i, row)
+        out_date = row['Out'].to_pydatetime().date()
+        in_date = row['In'].to_pydatetime().date()
+        feedback_date = row['Feedback'].to_pydatetime().date()
+
+        if out_date >= start and out_date <= end:
+            modules_out.append(row)
+        if in_date >= start and in_date <= end:
+            modules_in.append(row)
+        if feedback_date >= start and feedback_date <= end:
+            modules_feedback,append(row)
+
+    module_leader_phrases = defaultdict(list)
+
+    print(modules_in)
+    print(modules_out)
+    print(modules_feedback)
+
+    mailer = Mailer(SMTP_USERNAME, SMTP_PASSWORD, SMTP_SERVER, SMTP_PORT)
+
+    for row in modules_in:
+        module_leader = module2leader[row['Module']]
+        phrase = 'Assessment "%s (%s)" for module %s is due to be handed in' % (row['Coursework'], row['Percentage'], row['Module'])
+        module_leader_phrases[module_leader].append(phrase)
+    for row in modules_out:
+        module_leader = module2leader[row['Module']]
+        phrase = 'Assessment "%s (%s)" for module %s is due to be handed out' % (row['Coursework'], row['Percentage'], row['Module'])
+        module_leader_phrases[module_leader].append(phrase)
+    for row in modules_feedback:
+        module_leader = module2leader[row['Module']]
+        phrase = 'Feedback for Assessment "%s (%s)" for module %s is due to be handed back to students.' % (row['Coursework'], row['Percentage'], row['Module'])
+        module_leader_phrases[module_leader].append(phrase)
+
+    for module_leader, phrases in module_leader_phrases.items():
+        opening = "Dear %s,\n\nAccording to the assessment timetable you agreed to at the start of the year, you have the following assessment tasks taking place this week:\n" % (module_leader)
+        middle = "\n".join(phrases)
+        closing = "\nPlease check this is as you expect. If anything has changed and you have not already discussed this with Helen Phillips, please make sure to contact her immediately.\nIf you are due to be returning feedback this week and will not make this deadline you must inform both Helen Phillips and Andrew Jones as soon as possible."
+        full_message = "%s\n%s\n%s" % (opening, middle, closing)
+        print(full_message)
+        mailer.send(SMTP_USERNAME, REPORT_TO, "test - %s" % module_leader, full_message)
 
 
 
