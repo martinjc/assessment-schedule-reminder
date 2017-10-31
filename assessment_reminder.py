@@ -4,27 +4,26 @@ import pandas
 import argparse
 
 from collections import defaultdict
+from datetime import datetime, timedelta
 
+from config import *
 from datalib.module_list import *
 
-REPORT_TO = ["PhillipsHR@cardiff.ac.uk"]
-
-INPUT_DIR = os.path.join(os.getcwd(), 'input')
 
 def read_module_leaders():
     """
     Read in a .csv of module leaders and return two lookup dictionaries
 
-    CSV file should be in a 2-column format where each row contains a module code and the module leader
+    CSV file should be in a 2-column format where each row contains
+    a module code and the module leader
     """
-
     MODULE_LEADER_COL = 'module leader'
     MODULE_CODE_COL = 'module'
 
     leader2modules = defaultdict(list)
     module2leader = defaultdict(str)
 
-    leader2module_file = os.path.join(INPUT_DIR, 'module_list.csv')
+    leader2module_file = os.path.join(INPUT_DIR, MODULE_TO_MODULE_LEADER_FILE)
     with open(leader2module_file, 'r') as input_file:
         reader = csv.DictReader(input_file)
         for row in reader:
