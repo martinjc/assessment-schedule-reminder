@@ -1,5 +1,6 @@
 # no data on github please
 input/*
+_credentials.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
