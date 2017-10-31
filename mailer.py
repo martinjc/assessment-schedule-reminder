@@ -11,22 +11,22 @@ class Mailer:
 
     def __init__(self, uname, pwd, server, port):
 
-        self.msg = MIMEMultipart()
         self.uname = uname
         self.pwd = pwd
-        self.sender = smtplib.SMTP(server, port)
-
+        self.server = server
+        self.port = port
 
 
     def send(self, send_from, send_to, subject, body, files=[]):
 
         # header
+        self.msg = MIMEMultipart()
         self.msg['From'] = send_from
         self.msg['To'] = COMMASPACE.join(send_to)
         self.msg['Date'] = formatdate(localtime=True)
         self.msg['Subject'] = subject
 
-        self.msg.attach(MIMEText(body))
+        self.msg.attach(MIMEText(body, 'plain'))
 
         # attach files
         for f in files:
@@ -39,6 +39,7 @@ class Mailer:
                 self.msg.attach(part)
 
         """authenticate with SMTP server and send email"""
+        self.sender = smtplib.SMTP(self.server, self.port)
         self.sender.ehlo()
         self.sender.starttls()
         self.sender.login(self.uname, self.pwd)
