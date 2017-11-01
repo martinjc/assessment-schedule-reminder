@@ -151,10 +151,16 @@ def main(dev_mode=False):
         html = render_template('email_template.html', context)
         text = render_template('email_template.txt', context)
 
-        if module_leader == "Dr Martin Chorley":
-            print('sending...')
+        if not dev_mode:
             mailer.send(SEND_FROM, module_leader_email, "Assessment tasks due this week - %s" % module_leader, text_body=text, html_body=html)
+        else:
+            mailer.mock(SEND_FROM, module_leader_email, "Assessment tasks due this week - %s" % module_leader, text_body=text, html_body=html)
 
 
 if __name__ == '__main__':
-    main()
+
+    parser = argparse.ArgumentParser(description="Reminding module leaders of their assessment commitments")
+    parser.add_argument('-d', '--dev', help='Development mode, do not email module leaders, use dev email address instead', action='store_true')
+    args = parser.parse_args()
+
+    main(args.dev)
