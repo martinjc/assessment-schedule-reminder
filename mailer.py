@@ -20,7 +20,7 @@ class Mailer:
     def send(self, send_from, send_to, subject, text_body=None, html_body=None, files=[]):
 
         # header
-        self.msg = MIMEMultipart()
+        self.msg = MIMEMultipart('alternative')
         self.msg['From'] = "COMSC-OpenAccess@cardiff.ac.uk"
         self.msg['To'] = COMMASPACE.join(send_to)
         self.msg['Date'] = formatdate(localtime=True)

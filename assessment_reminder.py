@@ -6,10 +6,17 @@ import argparse
 from collections import defaultdict
 from datetime import datetime, timedelta
 
+from jinja2 import Environment, FileSystemLoader
+
 from config import *
 from mailer import Mailer
 from datalib.module_list import *
 
+TEMPLATE_PATH = os.path.join(os.getcwd(), 'templates')
+TEMPLATE_ENVIRONMENT = Environment(autoescape=False, loader=FileSystemLoader(TEMPLATE_PATH), trim_blocks=False)
+
+def render_template(template_filename, context):
+    return TEMPLATE_ENVIRONMENT.get_template(template_filename).render(context)
 
 def read_module_leaders():
     """
@@ -104,35 +111,47 @@ def main(dev_mode=False):
         if feedback_date >= start and feedback_date <= end:
             modules_feedback,append(row)
 
-    module_leader_phrases = defaultdict(list)
-
     mailer = Mailer(SMTP_USERNAME, SMTP_PASSWORD, SMTP_SERVER, SMTP_PORT)
+
+    module_leaders = set()
+    # collect the module leaders
+    for row in modules_in:
+        module_leader = module2leader[row['Module']]
+        module_leaders.add(module_leader)
+    for row in modules_out:
+        module_leader = module2leader[row['Module']]
+        module_leaders.add(module_leader)
+    for row in modules_feedback:
+        module_leader = module2leader[row['Module']]
+        module_leaders.add(module_leader)
+
+    module_leader_contexts = defaultdict(dict)
+    for module_leader in module_leaders:
+        module_leader_contexts[module_leader]['module_leader'] = module_leader
+        module_leader_contexts[module_leader]['tasks'] = []
 
     for row in modules_in:
         module_leader = module2leader[row['Module']]
-        phrase = 'Assessment "%s (%s)" for module %s is due to be handed in' % (row['Coursework'], row['Percentage'], row['Module'])
-        module_leader_phrases[module_leader].append(phrase)
+        r_dict = row.to_dict()
+        r_dict['in'] = True
+        module_leader_contexts[module_leader]['tasks'].append(r_dict)
     for row in modules_out:
         module_leader = module2leader[row['Module']]
-        phrase = 'Assessment "%s (%s)" for module %s is due to be handed out' % (row['Coursework'], row['Percentage'], row['Module'])
-        module_leader_phrases[module_leader].append(phrase)
+        r_dict = row.to_dict()
+        r_dict['out'] = True
+        module_leader_contexts[module_leader]['tasks'].append(r_dict)
     for row in modules_feedback:
         module_leader = module2leader[row['Module']]
-        phrase = 'Feedback for Assessment "%s (%s)" for module %s is due to be handed back to students.' % (row['Coursework'], row['Percentage'], row['Module'])
-        module_leader_phrases[module_leader].append(phrase)
+        r_dict = row.to_dict()
+        r_dict['feedback'] = True
+        module_leader_contexts[module_leader]['tasks'].append(r_dict)
 
-    for module_leader, phrases in module_leader_phrases.items():
-        opening = "Dear %s,\n\nAccording to the assessment timetable you agreed to at the start of the year, you have the following assessment tasks taking place this week:\n" % (module_leader)
-        middle = "\n".join(phrases)
-        closing = "\nPlease check this is as you expect. If anything has changed and you have not already discussed this with Helen Phillips, please make sure to contact her immediately. If you are due to be returning feedback this week and will not make this deadline you must inform both Helen Phillips and Andrew Jones as soon as possible."
-        full_message = "%s\n%s\n%s\n" % (opening, middle, closing)
-        print(full_message)
+    for module_leader, context in module_leader_contexts.items():
+        html = render_template('email_template.html', context)
+        text = render_template('email_template.txt', context)
         if module_leader == "Dr Martin Chorley":
-            print("sending...")
-            mailer.send(SMTP_USERNAME, REPORT_TO, "test - %s" % module_leader, text_body = full_message)
-
-
-
+            print('sending...')
+            mailer.send(SMTP_USERNAME, REPORT_TO, "test - %s" % module_leader, text_body=text, html_body=html)
 
 
 if __name__ == '__main__':
