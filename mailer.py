@@ -17,16 +17,19 @@ class Mailer:
         self.port = port
 
 
-    def send(self, send_from, send_to, subject, body, files=[]):
+    def send(self, send_from, send_to, subject, text_body=None, html_body=None, files=[]):
 
         # header
         self.msg = MIMEMultipart()
-        self.msg['From'] = send_from
+        self.msg['From'] = "COMSC-OpenAccess@cardiff.ac.uk"
         self.msg['To'] = COMMASPACE.join(send_to)
         self.msg['Date'] = formatdate(localtime=True)
         self.msg['Subject'] = subject
 
-        self.msg.attach(MIMEText(body, 'plain'))
+        if text_body:
+            self.msg.attach(MIMEText(text_body, 'plain'))
+        if html_body:
+            self.msg.attach(MIMEText(html_body, 'html'))
 
         # attach files
         for f in files:
@@ -43,5 +46,5 @@ class Mailer:
         self.sender.ehlo()
         self.sender.starttls()
         self.sender.login(self.uname, self.pwd)
-        self.sender.sendmail(send_from, send_to, self.msg.as_string())
+        self.sender.sendmail("COMSC-OpenAccess@cardiff.ac.uk", send_to, self.msg.as_string())
         self.sender.quit()

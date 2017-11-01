@@ -83,13 +83,9 @@ def read_assessment_sheet():
 def main(dev_mode=False):
 
     leader2modules, module2leader = read_module_leaders()
-    print(leader2modules, module2leader)
     leader2email = read_module_leaders_emails()
-    print(leader2email)
     start, end = calculate_start_and_end_of_week()
-    print(start, end)
     assessment_data = read_assessment_sheet()
-    print(assessment_data)
 
     modules_out = []
     modules_in = []
@@ -110,10 +106,6 @@ def main(dev_mode=False):
 
     module_leader_phrases = defaultdict(list)
 
-    print(modules_in)
-    print(modules_out)
-    print(modules_feedback)
-
     mailer = Mailer(SMTP_USERNAME, SMTP_PASSWORD, SMTP_SERVER, SMTP_PORT)
 
     for row in modules_in:
@@ -132,10 +124,12 @@ def main(dev_mode=False):
     for module_leader, phrases in module_leader_phrases.items():
         opening = "Dear %s,\n\nAccording to the assessment timetable you agreed to at the start of the year, you have the following assessment tasks taking place this week:\n" % (module_leader)
         middle = "\n".join(phrases)
-        closing = "\nPlease check this is as you expect. If anything has changed and you have not already discussed this with Helen Phillips, please make sure to contact her immediately.\nIf you are due to be returning feedback this week and will not make this deadline you must inform both Helen Phillips and Andrew Jones as soon as possible."
-        full_message = "%s\n%s\n%s" % (opening, middle, closing)
+        closing = "\nPlease check this is as you expect. If anything has changed and you have not already discussed this with Helen Phillips, please make sure to contact her immediately. If you are due to be returning feedback this week and will not make this deadline you must inform both Helen Phillips and Andrew Jones as soon as possible."
+        full_message = "%s\n%s\n%s\n" % (opening, middle, closing)
         print(full_message)
-        mailer.send(SMTP_USERNAME, REPORT_TO, "test - %s" % module_leader, full_message)
+        if module_leader == "Dr Martin Chorley":
+            print("sending...")
+            mailer.send(SMTP_USERNAME, REPORT_TO, "test - %s" % module_leader, text_body = full_message)
 
 
 
