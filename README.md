@@ -24,5 +24,8 @@ All configuration options are specified in the file `config.py`, see comments in
 ## TODO
 
 * Add comments to `config.py`!
+* Input should be Semester weeks, not dates (makes it easier to generate from module review data, which can then be checked by year tutors/module leaders/A&F lead)
+    * This needs a weeks -> dates conversion sheet as well
 * Replace string messages with HTML templating (jinja)
     * Include mailto links for notification of problems/issues
+* Generate assessment timetables from this data - much easier than creating spreadsheets
