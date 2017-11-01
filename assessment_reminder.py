@@ -159,8 +159,8 @@ def main(dev_mode=False):
 
 if __name__ == '__main__':
 
-    parser = argparse.ArgumentParser(description="Reminding module leaders of their assessment commitments")
-    parser.add_argument('-d', '--dev', help='Development mode, do not email module leaders, use dev email address instead', action='store_true')
+    parser = argparse.ArgumentParser(description="Reminding module leaders of their assessment tasks")
+    parser.add_argument('-d', '--dev', help='Development mode, do not email module leaders, write emails to file instead', action='store_true')
     args = parser.parse_args()
 
     main(args.dev)
