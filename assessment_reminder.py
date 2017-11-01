@@ -12,7 +12,6 @@ from config import *
 from mailer import Mailer
 from datalib.module_list import *
 
-TEMPLATE_PATH = os.path.join(os.getcwd(), 'templates')
 TEMPLATE_ENVIRONMENT = Environment(autoescape=False, loader=FileSystemLoader(TEMPLATE_PATH), trim_blocks=False)
 
 def render_template(template_filename, context):
@@ -147,17 +146,15 @@ def main(dev_mode=False):
         module_leader_contexts[module_leader]['tasks'].append(r_dict)
 
     for module_leader, context in module_leader_contexts.items():
+        module_leader_email = leader2email[module_leader]
+
         html = render_template('email_template.html', context)
         text = render_template('email_template.txt', context)
+
         if module_leader == "Dr Martin Chorley":
             print('sending...')
-            mailer.send(SMTP_USERNAME, REPORT_TO, "test - %s" % module_leader, text_body=text, html_body=html)
+            mailer.send(SEND_FROM, module_leader_email, "Assessment tasks due this week - %s" % module_leader, text_body=text, html_body=html)
 
 
 if __name__ == '__main__':
-
-    parser = argparse.ArgumentParser(description="Reminding module leaders of their assessment commitments")
-    parser.add_argument('-d', '--dev', help='Development mode, do not email module leaders, use dev email address instead', action='store_true')
-    args = parser.parse_args()
-
-    main(args.dev)
+    main()

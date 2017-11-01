@@ -21,8 +21,8 @@ class Mailer:
 
         # header
         self.msg = MIMEMultipart('alternative')
-        self.msg['From'] = "COMSC-OpenAccess@cardiff.ac.uk"
-        self.msg['To'] = COMMASPACE.join(send_to)
+        self.msg['From'] = send_from
+        self.msg['To'] = send_to
         self.msg['Date'] = formatdate(localtime=True)
         self.msg['Subject'] = subject
 
@@ -46,5 +46,8 @@ class Mailer:
         self.sender.ehlo()
         self.sender.starttls()
         self.sender.login(self.uname, self.pwd)
-        self.sender.sendmail("COMSC-OpenAccess@cardiff.ac.uk", send_to, self.msg.as_string())
+        # save the message rather than send it
+        with open('test-send-%s.txt' % send_to, 'w') as email_file:
+            email_file.write(self.msg.as_string())
+        #self.sender.sendmail(send_from, send_to, self.msg.as_string())
         self.sender.quit()
