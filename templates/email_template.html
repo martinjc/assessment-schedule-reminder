@@ -1,22 +1,22 @@
 <p>Dear {{module_leader}},</p>
 <p>The following {% if tasks|length >= 2 %}actions are{% else %}action is{% endif %} due for your modules this week:</p>
 <ul>
-{% for task in tasks %}
-    {% if task.in %}
+{%- for task in tasks %}
+    {%- if task.in %}
     <li>
         Assessment "{{ task.Coursework }} ({{ task.Percentage }})" for module {{ task.Module }} is due to be handed in.
         <a href="mailto:{{task.address}}?subject={{task.Module}} - confirmation of assessment handed in&body=Assessment {{ task.Coursework }} ({{ task.Percentage }}) for module {{ task.Module }} has been handed in.">Click here and send to confirm when complete.</a>
     </li>
-    {% elif task.out %}
+    {%- elif task.out %}
     <li>
         Assessment "{{ task.Coursework }} ({{ task.Percentage }})" for module {{ task.Module }} is due to be handed out.
         <a href="mailto:{{task.address}}?subject={{task.Module}} - confirmation of assessment handed out&body=Assessment {{ task.Coursework }} ({{ task.Percentage }}) for module {{ task.Module }} has been handed out.">Click here and send to confirm when complete.</a>
     </li>
-    {% elif task.feedback %}
+    {%- elif task.feedback %}
     <li>
         Feedback for assessment "{{ task.Coursework }} ({{ task.Percentage }})" for module {{ task.Module }} is due to be handed back to students.
         <a href="mailto:{{task.address}}?subject={{task.Module}} - confirmation of assessment feedback returned&body=Feedback for Assessment {{ task.Coursework }} ({{ task.Percentage }}) for module {{ task.Module }} has been handed back to students.">Click here and send to confirm when complete.</a>
     </li>
-    {% endif %}
-{% endfor %}
+    {%- endif %}
+{%- endfor %}
 </ul>

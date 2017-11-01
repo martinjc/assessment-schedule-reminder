@@ -2,15 +2,14 @@ Dear {{module_leader}}
 
 The following {% if tasks|length >= 2 %}actions are{% else %}action is{% endif %} due for your modules this week:
 
-
-{% for task in tasks %}
-    {% if task.in %}
+{%- for task in tasks %}
+    {%- if task.in %}
         Assessment "{{ task.Coursework }} ({{ task.Percentage }})" for module {{ task.Module }} is due to be handed in.
-    {% elif task.out %}
+    {%- elif task.out %}
         Assessment "{{ task.Coursework }} ({{ task.Percentage }})" for module {{ task.Module }} is due to be handed out.
-    {% elif task.feedback %}
+    {%- elif task.feedback %}
         Feedback for assessment "{{ task.Coursework }} ({{ task.Percentage }})" for module {{ task.Module }} is due to be handed back to students.
-    {% endif %}
-{% endfor %}
+    {%- endif %}
+{%- endfor %}
 
 Please email AN EMAIL ADDRESS to confirm when {% if tasks|length >= 2 %}these tasks are{% else %}this task is{% endif %} complete
