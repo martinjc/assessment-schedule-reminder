@@ -18,6 +18,10 @@ optional arguments:
 ```
 
 
+## Requirements
+Python3, Jinja2, Pandas, xlrd. All requirements are pip installable
+
+
 ## Inputs
 The script requires a number of file inputs.
 
