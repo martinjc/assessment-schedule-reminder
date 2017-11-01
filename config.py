@@ -7,7 +7,7 @@ import os
 from _credentials import uname, pwd
 
 # Address to send emails from
-SEND_FROM = "ChorleyMJ@cardiff.ac.uk"
+SEND_FROM = "COMSC-AF@cardiff.ac.uk"
 
 # directory containing necessary csv files for input
 INPUT_DIR = os.path.join(os.getcwd(), 'input')
