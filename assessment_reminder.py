@@ -1,18 +1,22 @@
+# standard library
 import os
 import csv
-import pandas
 import argparse
 
 from collections import defaultdict
 from datetime import datetime, timedelta
 
+# external libraries
+import pandas
 from jinja2 import Environment, FileSystemLoader
 
+# internal libs
 from config import *
 from mailer import Mailer
 from datalib.module_list import *
 
-TEMPLATE_ENVIRONMENT = Environment(autoescape=False, loader=FileSystemLoader(TEMPLATE_PATH), trim_blocks=False)
+
+TEMPLATE_ENVIRONMENT = Environment(autoescape=True, loader=FileSystemLoader(TEMPLATE_PATH), trim_blocks=False)
 
 def render_template(template_filename, context):
     return TEMPLATE_ENVIRONMENT.get_template(template_filename).render(context)
@@ -128,6 +132,7 @@ def main(dev_mode=False):
     for module_leader in module_leaders:
         module_leader_contexts[module_leader]['module_leader'] = module_leader
         module_leader_contexts[module_leader]['tasks'] = []
+        module_leader_contexts[module_leader]['reply_to'] = SEND_FROM
 
     for row in modules_in:
         module_leader = module2leader[row['Module']]
