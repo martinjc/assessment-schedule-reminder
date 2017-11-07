@@ -21,7 +21,7 @@ class Mailer:
         # header
         self.msg = MIMEMultipart('alternative')
         self.msg['From'] = send_from
-        self.msg['To'] = send_to
+        self.msg['To'] = COMMASPACE.join(send_to)
         self.msg['Date'] = formatdate(localtime=True)
         self.msg['Subject'] = subject
 
@@ -50,7 +50,7 @@ class Mailer:
         self.sender.ehlo()
         self.sender.starttls()
         self.sender.login(self.uname, self.pwd)
-        print("SENDING MESSAGE!")
+        print("SENDING MESSAGE! - %s" % send_to)
         self.sender.sendmail(send_from, send_to, self.msg.as_string())
         self.sender.quit()
 

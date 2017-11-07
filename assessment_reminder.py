@@ -174,10 +174,10 @@ def main(dev_mode=False):
 
         if not dev_mode:
             # not in dev mode so we can send emails
-            mailer.send(SEND_FROM, module_leader_email, "Assessment tasks due this week - %s" % module_leader, text_body=text, html_body=html)
+            mailer.send(SEND_FROM, [module_leader_email, SEND_FROM], "***TEST MESSAGE*** Assessment tasks due this week - %s" % module_leader, text_body=text, html_body=html)
         else:
             # in dev mode, write the emails out instead
-            mailer.mock(SEND_FROM, module_leader_email, "Assessment tasks due this week - %s" % module_leader, text_body=text, html_body=html)
+            mailer.mock(SEND_FROM, [module_leader_email, SEND_FROM], " ***TEST MESSAGE*** Assessment tasks due this week - %s" % module_leader, text_body=text, html_body=html)
 
 
 if __name__ == '__main__':
