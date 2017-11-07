@@ -5,20 +5,20 @@
     {%- if task.in %}
     <li>
         Assessment "{{ task.Coursework }} ({{ task.Percentage }})" for module {{ task.Module }} is due to be handed in.
-        <a href="mailto:{{reply_to}}?subject={{task.Module}}%20-%20confirmation%20of%20assessment%20handed%20in&body=Assessment%20{{ task.Coursework|urlencode  }}%20({{ task.Percentage|urlencode  }})%20for%20module%20{{ task.Module|urlencode }}%20has%20been%20handed%20in.">Click here and send to confirm when complete.</a>
+        <a href="mailto:{{reply_to}}?subject={{task.Module}}%20-%20confirmation%20of%20assessment%20handed%20in&body=Assessment%20{{ task.Coursework|urlencode  }}%20({{ task.Percentage|urlencode  }})%20for%20module%20{{ task.Module|urlencode }}%20has%20been%20handed%20in.">Please click here and send to confirm when complete.</a>
     </li>
     {%- elif task.out %}
     <li>
         Assessment "{{ task.Coursework }} ({{ task.Percentage }})" for module {{ task.Module }} is due to be handed out.
-        <a href="mailto:{{reply_to}}?subject={{task.Module}}%20-%20confirmation%20of%20assessment%20handed%20out&body=Assessment%20{{ task.Coursework|urlencode  }}%20({{ task.Percentage|urlencode  }})%20for%20module%20{{ task.Module|urlencode }}%20has%20been%20handed%20out.">Click here and send to confirm when complete.</a>
+        <a href="mailto:{{reply_to}}?subject={{task.Module}}%20-%20confirmation%20of%20assessment%20handed%20out&body=Assessment%20{{ task.Coursework|urlencode  }}%20({{ task.Percentage|urlencode  }})%20for%20module%20{{ task.Module|urlencode }}%20has%20been%20handed%20out.">Please click here and send to confirm when complete.</a>
     </li>
     {%- elif task.feedback %}
     <li>
         Feedback for assessment "{{ task.Coursework }} ({{ task.Percentage }})" for module {{ task.Module }} is due to be handed back to students.
-        <a href="mailto:{{reply_to}}?subject={{task.Module}}%20-%20confirmation%20of%20assessment%20feedback%20returned&body=Feedback%20for%20Assessment%20{{ task.Coursework|urlencode  }}%20({{ task.Percentage|urlencode  }})%20for%20module%20{{ task.Module|urlencode  }}%20has%20been%20handed%20back%20to%20students.">Click here and send to confirm when complete.</a>
+        <a href="mailto:{{reply_to}}?subject={{task.Module}}%20-%20confirmation%20of%20assessment%20feedback%20returned&body=Feedback%20for%20Assessment%20{{ task.Coursework|urlencode  }}%20({{ task.Percentage|urlencode  }})%20for%20module%20{{ task.Module|urlencode  }}%20has%20been%20handed%20back%20to%20students.">Please click here and send to confirm when complete.</a>
     </li>
     {%- endif %}
 {%- endfor %}
 </ul>
-<p>If these details have changed and you have not already discussed these changes with Helen Phillips, please contact her as soon as possible.</p>
+<p>If these details have changed and you have not already discussed any changes with Helen Phillips, please contact her as soon as possible.</p>
 <!-- <p>Please email {{ reply_to }} to confirm when {% if tasks|length >= 2 %}these tasks are{% else %}this task is{% endif %} complete.</p> -->
