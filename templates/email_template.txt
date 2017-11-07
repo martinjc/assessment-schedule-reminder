@@ -1,6 +1,6 @@
 Dear {{module_leader}}
 
-According to the assessment timetable agreed at the start of the year, the following {% if tasks|length >= 2 %}actions are{% else %}action is{% endif %} due for your modules this week:
+According to the assessment timetable agreed at the start of the year, the following {% if tasks|length >= 2 %}actions are{% else %}action is{% endif %} due for your module(s) this week:
 
 {%- for task in tasks %}
     {%- if task.in %}
