@@ -4,17 +4,17 @@
 {%- for task in tasks %}
     {%- if task.in %}
     <li>
-        Assessment "{{ task.Coursework }} ({{ task.Percentage }})" for module {{ task.Module }} is due to be handed in.
+        Assessment "{{ task.Coursework }} ({{ task.Percentage }})" for module {{ task.Module }} is due to be <strong>handed in</strong>.
         <a href="mailto:{{reply_to}}?subject={{task.Module}}%20-%20confirmation%20of%20assessment%20handed%20in&body=Assessment%20{{ task.Coursework|urlencode  }}%20({{ task.Percentage|urlencode  }})%20for%20module%20{{ task.Module|urlencode }}%20has%20been%20handed%20in.">Please click here and send to confirm when complete.</a>
     </li>
     {%- elif task.out %}
     <li>
-        Assessment "{{ task.Coursework }} ({{ task.Percentage }})" for module {{ task.Module }} is due to be handed out.
+        Assessment "{{ task.Coursework }} ({{ task.Percentage }})" for module {{ task.Module }} is due to be <strong>handed out</strong>.
         <a href="mailto:{{reply_to}}?subject={{task.Module}}%20-%20confirmation%20of%20assessment%20handed%20out&body=Assessment%20{{ task.Coursework|urlencode  }}%20({{ task.Percentage|urlencode  }})%20for%20module%20{{ task.Module|urlencode }}%20has%20been%20handed%20out.">Please click here and send to confirm when complete.</a>
     </li>
     {%- elif task.feedback %}
     <li>
-        Feedback for assessment "{{ task.Coursework }} ({{ task.Percentage }})" for module {{ task.Module }} is due to be handed back to students.
+        <strong>Feedback</strong> for assessment "{{ task.Coursework }} ({{ task.Percentage }})" for module {{ task.Module }} is due to be <strong>handed back to students</strong>.
         <a href="mailto:{{reply_to}}?subject={{task.Module}}%20-%20confirmation%20of%20assessment%20feedback%20returned&body=Feedback%20for%20Assessment%20{{ task.Coursework|urlencode  }}%20({{ task.Percentage|urlencode  }})%20for%20module%20{{ task.Module|urlencode  }}%20has%20been%20handed%20back%20to%20students.">Please click here and send to confirm when complete.</a>
     </li>
     {%- endif %}
