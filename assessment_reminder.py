@@ -167,7 +167,7 @@ def main(dev_mode=False):
     # build and send email to each module leader
     for module_leader, context in module_leader_contexts.items():
         #module_leader_email = leader2email[module_leader]
-        module_leader_email = ['chorleymj@cardiff.ac.uk']
+        module_leader_email = 'chorleymj@cardiff.ac.uk'
 
         html = render_template('email_template.html', context)
         text = render_template('email_template.txt', context)
