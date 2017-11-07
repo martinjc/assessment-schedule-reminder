@@ -12,4 +12,4 @@ The following {% if tasks|length >= 2 %}actions are{% else %}action is{% endif %
     {%- endif %}
 {%- endfor %}
 
-Please email {{ reply_to }} to confirm when {% if tasks|length >= 2 %}these tasks are{% else %}this task is{% endif %} complete.
+Please email {{ reply_to }} to confirm when {% if tasks|length >= 2 %}these tasks are{% else %}this task is{% endif %} complete. If these details have changed and you have not already discussed these changes with Helen Phillips, please contact her as soon as possible.
