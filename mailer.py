@@ -51,12 +51,12 @@ class Mailer:
         self.sender.starttls()
         self.sender.login(self.uname, self.pwd)
         print("SENDING MESSAGE!")
-        #self.sender.sendmail(send_from, send_to, self.msg.as_string())
+        self.sender.sendmail(send_from, send_to, self.msg.as_string())
         self.sender.quit()
 
 
     def mock(self, send_from, send_to, subject, text_body=None, html_body=None, files=[]):
         self.build_msg(send_from, send_to, subject, text_body, html_body, files)
         # save the message rather than send it
-        with open('test-send-%s.txt' % send_to, 'w') as email_file:
+        with open('test-send-%s.txt' % subject, 'w') as email_file:
             email_file.write(self.msg.as_string())
