@@ -166,18 +166,17 @@ def main(dev_mode=False):
 
     # build and send email to each module leader
     for module_leader, context in module_leader_contexts.items():
-        #module_leader_email = leader2email[module_leader]
-        module_leader_email = 'chorleymj@cardiff.ac.uk'
+        module_leader_email = leader2email[module_leader]
 
         html = render_template('email_template.html', context)
         text = render_template('email_template.txt', context)
 
         if not dev_mode:
             # not in dev mode so we can send emails
-            mailer.send(SEND_FROM, [module_leader_email, SEND_FROM], "***TEST MESSAGE*** Assessment tasks due this week - %s" % module_leader, text_body=text, html_body=html)
+            mailer.send(SEND_FROM, [module_leader_email, SEND_FROM], "Assessment tasks due this week - %s" % module_leader, text_body=text, html_body=html)
         else:
             # in dev mode, write the emails out instead
-            mailer.mock(SEND_FROM, [module_leader_email, SEND_FROM], " ***TEST MESSAGE*** Assessment tasks due this week - %s" % module_leader, text_body=text, html_body=html)
+            mailer.mock(SEND_FROM, [module_leader_email, SEND_FROM], "Assessment tasks due this week - %s" % module_leader, text_body=text, html_body=html)
 
 
 if __name__ == '__main__':
