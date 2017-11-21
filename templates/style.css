@@ -1,0 +1,170 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+
+body {
+    line-height: 1;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+    content: '';
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/** Our styles start here **/
+
+body {
+    font-family: sans-serif;
+}
+
+header, footer {
+    height: 10vh;
+}
+
+/*
+Year
+label
+Autumn Semester
+Spring Semester
+
+Autumn Semester
+11 teaching weeks                  = 11
+3 weeks Christmas Recess          += 14
+1 teaching week                   += 15
+2 weeks exams                     += 17
+
+Spring Semester
+8 teaching weeks                   = 8
+3 weeks Easter Recess             += 11
+4 teaching weeks                  += 15
+5 weeks exams                     += 20
+ */
+
+.year {
+    min-height: 80vh;
+    min-width: 300vw;
+    display: grid;
+    grid-template-columns: 150px [autumn-start A1] 1fr [A2] 1fr [A3] 1fr [A4] 1fr [A5] 1fr [A6] 1fr [A7] 1fr [A8] 1fr [A9] 1fr [A10] 1fr [A11] 1fr [AR1] 1fr [AR2] 1fr [AR3] 1fr [A12] 1fr [EX1A] 1fr [EX2A] 1fr [autumn-end] 150px [spring-start S1] 1fr [S2] 1fr [S3] 1fr [S4] 1fr [S5] 1fr [S6] 1fr [S7] 1fr [S8] 1fr [SR1] 1fr [SR2] 1fr [SR3] 1fr [S9] 1fr [S10] 1fr [S11] 1fr [S12] 1fr [EX1S] 1fr [EX2S] 1fr [EX3S] 1fr [EX4S] 1fr [EX5S] 1fr [spring-end];
+    grid-template-rows: 20vh 20vh auto;
+    grid-auto-rows: minmax(100px auto);
+}
+
+.autumn {
+    grid-column: autumn-start / autumn-end;
+}
+
+.spring {
+    grid-column: spring-start / spring-end;
+}
+
+.module {
+    grid-template-rows: repeat(3, 1fr);
+}
+
+.semester.label {
+    grid-column: 1 / -1;
+    text-align: center;
+    font-size: 2em;
+    align-self: end;
+}
+
+.week.label {
+    text-align: center;
+}
+
+.week.label p:first-child {
+    font-size: 1.5em;
+    line-height: 1.5em;
+}
+
+.title {
+    overflow-x: hidden;
+}
+
+.assessment {
+    border: 1px solid black;
+    border-radius: 2px;
+}
+
+.cmt112.module {
+    grid-row: 3 / span 2;
+    grid-column: 1 / -1;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+.cmt112.module.label {
+    padding-top: auto;
+    padding-bottom: auto;
+    grid-row: 3 / span 2;
+    align-self: stretch;
+}
+
+.cmt112.assessment1.handout {
+    grid-row: 3 / span 1;
+    grid-column: A3 / A4;
+}
+
+.cmt112.assessment1.title {
+    grid-row: 3 / span 1;
+    grid-column: A4 / A5;
+}
+
+.cmt112.assessment1.handin {
+    grid-row: 3 / span 1;
+    grid-column: A5 / A6;
+}
+
+.cmt112.assessment1.feedback {
+    grid-row: 3 / span 1;
+    grid-column: A9 / A10;
+}
+
+.cmt112.assessment2.handout {
+    grid-row: 4 / span 1;
+    grid-column: A6 / A7;
+}
+
+.cmt112.assessment2.title {
+    grid-row: 4 / span 1;
+    grid-column: A7 / A12;
+}
+
+.cmt112.assessment2.handin {
+    grid-row: 4 / span 1;
+    grid-column: A12 / EX1A;
+}
+
+.cmt112.assessment2.feedback {
+    grid-row: 4 / span 1;
+    grid-column: S1 / S2;
+}

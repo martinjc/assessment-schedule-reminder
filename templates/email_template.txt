@@ -12,4 +12,4 @@ According to the assessment timetable agreed at the start of the year, the follo
     {%- endif %}
 {%- endfor %}
 
-Please email {{ reply_to }} to confirm when {% if tasks|length >= 2 %}these tasks are{% else %}this task is{% endif %} complete. If these details have changed and you have not already discussed any changes with Helen Phillips, please contact her as soon as possible.
+Please email {{ reply_to }} to confirm that {% if tasks|length >= 2 %}these tasks are{% else %}this task is{% endif %} correct. If these details have changed and you have not already discussed any changes with Helen Phillips, please contact her as soon as possible.
